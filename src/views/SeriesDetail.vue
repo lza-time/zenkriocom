@@ -1,0 +1,240 @@
+<template>
+  <div class="series-detail">
+    <!-- 顶部导航（沿用项目原有风格） -->
+    <header class="detail-header">
+      <nav>
+        <router-link to="/" class="back-btn">← Back to Home</router-link>
+        <h1 class="page-title">{{ seriesName }} Series</h1>
+      </nav>
+    </header>
+
+    <!-- 筛选栏（原有样式不变） -->
+    <div class="filter-bar">
+      <button
+          @click="filterCategory = 'all'"
+          :class="{ active: filterCategory === 'all' }"
+      >
+        All Products
+      </button>
+      <button
+          @click="filterCategory = 'Bathtub'"
+          :class="{ active: filterCategory === 'Bathtub' }"
+      >
+        Bathtubs
+      </button>
+      <button
+          @click="filterCategory = 'Basin'"
+          :class="{ active: filterCategory === 'Basin' }"
+      >
+        Basins
+      </button>
+    </div>
+
+    <!-- 产品网格（和首页卡片风格完全一致，修复空白） -->
+    <div class="products-grid">
+      <div
+          v-for="item in filteredProducts"
+          :key="item.id"
+          class="product-card"
+          @click="goToProduct(item.id)"
+      >
+        <div class="product-image">
+          <svg viewBox="0 0 200 200" v-html="item.icon"></svg>
+          <div v-if="item.badge" class="product-badge">{{ item.badge }}</div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">{{ item.category }}</div>
+          <div class="product-name">{{ item.name }}</div>
+          <div class="product-desc">{{ item.desc }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 无产品提示（避免空白） -->
+    <div class="empty" v-if="filteredProducts.length === 0">
+      No products found
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
+import { productData } from '@/mock/productData.js'
+
+const route = useRoute()
+const router = useRouter()
+const seriesName = ref(route.params.series)
+const filterCategory = ref('all')
+
+// 修复筛选逻辑：直接匹配产品分类，无复杂嵌套
+const filteredProducts = computed(() => {
+  if (filterCategory.value === 'all') return productData
+  return productData.filter(item =>
+      item.category.toLowerCase().includes(filterCategory.value.toLowerCase())
+  )
+})
+
+// 跳转产品详情
+const goToProduct = (id) => {
+  router.push(`/product/${id}`)
+}
+</script>
+
+<style scoped>
+/* 完全复用项目原有CSS变量、风格、布局 */
+.series-detail {
+  padding: 120px 40px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.detail-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 1px 20px rgba(0,0,0,0.08);
+  z-index: 99;
+  padding: 20px 0;
+}
+
+.detail-header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.page-title {
+  font-size: 20px;
+  color: var(--primary);
+  margin: 0;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-bar button {
+  padding: 10px 24px;
+  border: 1px solid #eee;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.filter-bar button.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* 产品网格：和首页完全一致的3列布局 */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* 产品卡片：完全沿用首页样式，修复默认可见（无延迟空白） */
+.product-card {
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.4s;
+  cursor: pointer;
+  opacity: 1; /* 直接显示，无动画空白 */
+  transform: translateY(0);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  height: 280px;
+  background: #e8e6e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.product-image svg {
+  width: 120px;
+  height: 120px;
+  opacity: 0.25;
+}
+
+.product-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--primary);
+  color: var(--accent);
+  padding: 6px 14px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.product-info {
+  padding: 28px;
+  text-align: center;
+}
+
+.product-category {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.product-name {
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.product-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+/* 响应式：和首页保持一致 */
+@media (max-width: 768px) {
+  .series-detail {
+    padding: 100px 20px 60px;
+  }
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
