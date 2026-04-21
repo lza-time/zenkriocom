@@ -1,6 +1,5 @@
 <template>
   <div class="series-detail">
-    <!-- 顶部导航（沿用项目原有风格） -->
     <header class="detail-header">
       <nav>
         <router-link to="/" class="back-btn">← Back to Home</router-link>
@@ -8,7 +7,6 @@
       </nav>
     </header>
 
-    <!-- 筛选栏（原有样式不变） -->
     <div class="filter-bar">
       <button
           @click="filterCategory = 'all'"
@@ -30,7 +28,6 @@
       </button>
     </div>
 
-    <!-- 产品网格（和首页卡片风格完全一致，修复空白） -->
     <div class="products-grid">
       <div
           v-for="item in filteredProducts"
@@ -39,7 +36,8 @@
           @click="goToProduct(item.id)"
       >
         <div class="product-image">
-          <svg viewBox="0 0 200 200" v-html="item.icon"></svg>
+          <!-- 全部锁死 1.png -->
+          <img src="@/assets/1.png" alt="Product" />
           <div v-if="item.badge" class="product-badge">{{ item.badge }}</div>
         </div>
         <div class="product-info">
@@ -50,7 +48,6 @@
       </div>
     </div>
 
-    <!-- 无产品提示（避免空白） -->
     <div class="empty" v-if="filteredProducts.length === 0">
       No products found
     </div>
@@ -67,7 +64,6 @@ const router = useRouter()
 const seriesName = ref(route.params.series)
 const filterCategory = ref('all')
 
-// 修复筛选逻辑：直接匹配产品分类，无复杂嵌套
 const filteredProducts = computed(() => {
   if (filterCategory.value === 'all') return productData
   return productData.filter(item =>
@@ -75,14 +71,12 @@ const filteredProducts = computed(() => {
   )
 })
 
-// 跳转产品详情
 const goToProduct = (id) => {
   router.push(`/product/${id}`)
 }
 </script>
 
 <style scoped>
-/* 完全复用项目原有CSS变量、风格、布局 */
 .series-detail {
   padding: 120px 40px 80px;
   max-width: 1200px;
@@ -146,21 +140,19 @@ const goToProduct = (id) => {
   border-color: var(--accent);
 }
 
-/* 产品网格：和首页完全一致的3列布局 */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
-/* 产品卡片：完全沿用首页样式，修复默认可见（无延迟空白） */
 .product-card {
   background: #fff;
   border-radius: 4px;
   overflow: hidden;
   transition: all 0.4s;
   cursor: pointer;
-  opacity: 1; /* 直接显示，无动画空白 */
+  opacity: 1;
   transform: translateY(0);
 }
 
@@ -172,16 +164,12 @@ const goToProduct = (id) => {
 .product-image {
   height: 280px;
   background: #e8e6e3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
 }
-
-.product-image svg {
-  width: 120px;
-  height: 120px;
-  opacity: 0.25;
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .product-badge {
@@ -228,7 +216,6 @@ const goToProduct = (id) => {
   font-size: 16px;
 }
 
-/* 响应式：和首页保持一致 */
 @media (max-width: 768px) {
   .series-detail {
     padding: 100px 20px 60px;

@@ -10,7 +10,8 @@
     <div class="detail-container">
       <div class="detail-left">
         <div class="detail-image">
-          <svg viewBox="0 0 200 200" v-html="product.icon"></svg>
+          <!-- 锁死 1.png -->
+          <img src="@/assets/1.png" alt="Product" />
         </div>
       </div>
       <div class="detail-right">
@@ -42,28 +43,25 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
-// 后续接数据库：替换为 axios 请求 /api/product/{id}
 import { productData } from '@/mock/productData.js'
 
 const route = useRoute()
 const productId = route.params.id
 const product = ref({})
 
-// 获取产品详情（后续接接口，直接替换这里）
 onMounted(() => {
   product.value = productData.find(item => item.id == productId)
 })
 </script>
 
 <style scoped>
-/* 风格完全统一 */
 .product-detail { padding: 120px 40px 80px; max-width: 1200px; margin: 0 auto; }
 .detail-header { position: fixed; top: 0; left: 0; width: 100%; background: #fff; box-shadow: 0 1px 20px rgba(0,0,0,0.08); z-index: 999; }
 .detail-header nav { max-width: 1300px; margin: 0 auto; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; }
 .back-btn, .series-btn { color: var(--primary); text-decoration: none; font-size: 16px; font-weight: 500; }
 .detail-container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 40px; }
-.detail-image { width: 100%; height: 400px; background: #e8e6e1; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
-.detail-image svg { width: 200px; height: 200px; opacity: 0.3; }
+.detail-image { width: 100%; height: 400px; background: #e8e6e1; border-radius: 4px; overflow: hidden; }
+.detail-image img { width: 100%; height: 100%; object-fit: cover; }
 .product-category { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
 .product-name { font-size: 36px; color: var(--primary); margin: 12px 0 24px; }
 .product-desc { font-size: 16px; color: var(--text-light); line-height: 1.7; margin-bottom: 30px; }

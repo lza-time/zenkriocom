@@ -14,8 +14,7 @@
     <!-- Header Navigation -->
     <header id="header">
       <nav>
-        <!-- Logo跳首页 -->
-        <router-link to="/" class="logo">ZENT<span>RIO</span></router-link>
+        <router-link to="/" class="logo">ZENK<span>RIO</span></router-link>
         <ul class="nav-links">
           <li><a href="#products" class="nav-link">Product Series</a></li>
           <li><a href="#categories" class="nav-link">Product Categories</a></li>
@@ -48,7 +47,7 @@
       <div class="hero-content">
         <div class="hero-label">Premium Bathroom Solutions</div>
         <h1>Redefining the Future Aesthetics of <strong>Bathroom Spaces</strong></h1>
-        <p>ZENTRIO is dedicated to providing high-end customized bathroom solutions for global hotels, real estate and commercial projects, reshaping the experience with exquisite craftsmanship and forward-looking design.</p>
+        <p>ZENKRIO is dedicated to providing high-end customized bathroom solutions for global hotels, real estate and commercial projects, reshaping the experience with exquisite craftsmanship and forward-looking design.</p>
         <div class="hero-actions">
           <a href="#products" class="btn-primary">Explore Products</a>
           <router-link to="/contact" class="btn-secondary">Get a Quote</router-link>
@@ -87,18 +86,12 @@
       <div class="section-header fade-up">
         <div class="section-label">Product Collection</div>
         <h2 class="section-title">Craftsmanship & <strong>Curated Collections</strong></h2>
-        <p class="section-desc">Every ZENTRIO product is crafted with rigorous standards, integrating minimalism aesthetics with exceptional performance.</p>
+        <p class="section-desc">Every ZENKRIO product is crafted with rigorous standards, integrating minimalism aesthetics with exceptional performance.</p>
       </div>
       <div class="products-grid">
-        <!-- 产品卡片：点击跳产品详情 -->
         <div class="product-card fade-up" @click="goToProduct(1)">
           <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <ellipse cx="100" cy="130" rx="80" ry="30" stroke="#999" stroke-width="1.5" fill="none"/>
-              <path d="M20 130 Q20 50 100 40 Q180 50 180 130" stroke="#999" stroke-width="1.5" fill="none"/>
-              <line x1="100" y1="40" x2="100" y2="15" stroke="#999" stroke-width="1.5"/>
-              <circle cx="100" cy="12" r="4" stroke="#999" stroke-width="1.5" fill="none"/>
-            </svg>
+            <img src="@/assets/1.png" alt="Product">
             <div class="product-badge">Hot Sale</div>
           </div>
           <div class="product-info">
@@ -115,36 +108,7 @@
 
         <div class="product-card fade-up" @click="goToProduct(2)">
           <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <rect x="40" y="50" width="120" height="100" rx="3" stroke="#999" stroke-width="1.5" fill="none"/>
-              <rect x="55" y="65" width="90" height="70" rx="2" stroke="#999" stroke-width="1.2" fill="none"/>
-              <line x1="100" y1="155" x2="100" y2="170" stroke="#999" stroke-width="1.5"/>
-              <circle cx="100" cy="175" r="5" stroke="#999" stroke-width="1.5" fill="none"/>
-            </svg>
-          </div>
-          <div class="product-info">
-            <div class="product-category">Smart Mirror Cabinet</div>
-            <div class="product-name">LUMINA Series</div>
-            <div class="product-desc">LED touch dimming, anti-fog system, hidden storage space design</div>
-            <div class="product-specs">
-              <div class="spec"><strong>900mm</strong>Width</div>
-              <div class="spec"><strong>Touch</strong>Control</div>
-              <div class="spec"><strong>IP44</strong>Protection</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card fade-up" @click="goToProduct(3)">
-          <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <ellipse cx="100" cy="100" rx="55" ry="20" stroke="#999" stroke-width="1.5" fill="none"/>
-              <path d="M45 100 Q45 160 100 165 Q155 160 155 100" stroke="#999" stroke-width="1.5" fill="none"/>
-              <circle cx="100" cy="90" r="6" stroke="#999" stroke-width="1.5" fill="none"/>
-              <line x1="100" y1="60" x2="100" y2="84" stroke="#999" stroke-width="1.5"/>
-              <line x1="88" y1="52" x2="100" y2="60" stroke="#999" stroke-width="1.2"/>
-              <line x1="112" y1="52" x2="100" y2="60" stroke="#999" stroke-width="1.2"/>
-            </svg>
-            <div class="product-badge">New Arrival</div>
+            <img src="@/assets/1.png" alt="Product">
           </div>
           <div class="product-info">
             <div class="product-category">Countertop Basin</div>
@@ -158,17 +122,13 @@
           </div>
         </div>
 
-        <div class="product-card fade-up" @click="goToProduct(4)">
+        <div class="product-card fade-up" @click="goToProduct(3)">
           <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <rect x="60" y="30" width="80" height="140" rx="3" stroke="#999" stroke-width="1.5" fill="none"/>
-              <rect x="70" y="40" width="60" height="80" rx="2" stroke="#999" stroke-width="1.2" fill="none"/>
-              <circle cx="100" cy="145" r="10" stroke="#999" stroke-width="1.5" fill="none"/>
-              <circle cx="100" cy="145" r="4" fill="#999" opacity="0.3"/>
-            </svg>
+            <img src="@/assets/1.png" alt="Product">
+            <div class="product-badge">New Arrival</div>
           </div>
           <div class="product-info">
-            <div class="product-category">Smart Toilet</div>
+            <div class="product-category">Toilet</div>
             <div class="product-name">NEXUS Series</div>
             <div class="product-desc">Instant heating system, auto lid sensor, UV sterilization & deodorization</div>
             <div class="product-specs">
@@ -179,49 +139,18 @@
           </div>
         </div>
 
-        <div class="product-card fade-up" @click="goToProduct(5)">
+        <div class="product-card fade-up" @click="goToProduct(4)">
           <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <line x1="100" y1="30" x2="100" y2="80" stroke="#999" stroke-width="1.5"/>
-              <circle cx="100" cy="90" r="12" stroke="#999" stroke-width="1.5" fill="none"/>
-              <path d="M88 92 Q100 140 112 92" stroke="#999" stroke-width="1" fill="none" opacity="0.4"/>
-              <line x1="94" y1="110" x2="94" y2="140" stroke="#999" stroke-width="0.8" opacity="0.3"/>
-              <line x1="100" y1="115" x2="100" y2="150" stroke="#999" stroke-width="0.8" opacity="0.3"/>
-              <line x1="106" y1="110" x2="106" y2="140" stroke="#999" stroke-width="0.8" opacity="0.3"/>
-            </svg>
+            <img src="@/assets/1.png" alt="Product">
           </div>
           <div class="product-info">
-            <div class="product-category">Shower System</div>
-            <div class="product-name">RAINFALL Series</div>
-            <div class="product-desc">Thermostatic valve technology, air-injected water, 304 stainless steel body</div>
-            <div class="product-specs">
-              <div class="spec"><strong>300mm</strong>Top Spray</div>
-              <div class="spec"><strong>Thermostat</strong>Control</div>
-              <div class="spec"><strong>Stainless Steel</strong>Material</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-card fade-up" @click="goToProduct(6)">
-          <div class="product-image">
-            <svg viewBox="0 0 200 200">
-              <rect x="30" y="60" width="140" height="80" rx="3" stroke="#999" stroke-width="1.5" fill="none"/>
-              <rect x="45" y="72" width="50" height="55" rx="2" stroke="#999" stroke-width="1.2" fill="none"/>
-              <rect x="105" y="72" width="50" height="55" rx="2" stroke="#999" stroke-width="1.2" fill="none"/>
-              <circle cx="70" cy="55" r="6" stroke="#999" stroke-width="1.2" fill="none"/>
-              <circle cx="130" cy="55" r="6" stroke="#999" stroke-width="1.2" fill="none"/>
-              <line x1="30" y1="140" x2="30" y2="170" stroke="#999" stroke-width="1.5"/>
-              <line x1="170" y1="140" x2="170" y2="170" stroke="#999" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bathroom Cabinet</div>
+            <div class="product-category">Shower Door</div>
             <div class="product-name">MODULAR Series</div>
-            <div class="product-desc">Modular design, moisture-proof multilayer wood, soft close hinge technology</div>
+            <div class="product-desc">Aluminum alloy frame, explosion-proof glass, waterproof sealing strip, mute sliding</div>
             <div class="product-specs">
-              <div class="spec"><strong>1200mm</strong>Width</div>
-              <div class="spec"><strong>Double Basin</strong>Configuration</div>
-              <div class="spec"><strong>Solid Wood</strong>Board</div>
+              <div class="spec"><strong>8mm</strong>Tempered Glass</div>
+              <div class="spec"><strong>Stainless Steel</strong>Hardware</div>
+              <div class="spec"><strong>Custom Size</strong>Service</div>
             </div>
           </div>
         </div>
@@ -231,18 +160,12 @@
     <!-- Featured Product -->
     <div class="featured">
       <div class="featured-visual">
-        <svg viewBox="0 0 200 200">
-          <ellipse cx="100" cy="140" rx="85" ry="25" stroke="#c9a96e" stroke-width="1" fill="none"/>
-          <path d="M15 140 Q15 50 100 35 Q185 50 185 140" stroke="#c9a96e" stroke-width="1" fill="none"/>
-          <line x1="100" y1="35" x2="100" y2="10" stroke="#c9a96e" stroke-width="1"/>
-          <circle cx="100" cy="7" r="4" stroke="#c9a96e" stroke-width="1" fill="none"/>
-          <path d="M50 140 Q50 90 100 80 Q150 90 150 140" stroke="#c9a96e" stroke-width="0.5" fill="none" opacity="0.4"/>
-        </svg>
+        <img src="@/assets/1.png" alt="Featured" class="featured-img">
       </div>
       <div class="featured-content fade-up">
         <div class="section-label">Signature Collection</div>
         <h2>AURORA <strong>Flagship Series</strong></h2>
-        <p>The AURORA series represents ZENTRIO's ultimate interpretation of bathroom aesthetics. Featuring integrated solid surface craftsmanship and 12-step fine polishing, it delivers a silky-smooth touch.</p>
+        <p>The AURORA series represents ZENKRIO's ultimate interpretation of bathroom aesthetics. Featuring integrated solid surface craftsmanship and 12-step fine polishing, it delivers a silky-smooth touch.</p>
         <ul class="feature-list">
           <li>Integrated solid surface · Seamless design</li>
           <li>Double-layer insulation · 40% longer constant temperature</li>
@@ -250,7 +173,6 @@
           <li>Custom sizes available · Project-ready</li>
           <li>CE, cUPC, WaterMark certified</li>
         </ul>
-        <!-- 跳系列详情 -->
         <router-link to="/series/AURORA" class="btn-primary">View Series</router-link>
       </div>
     </div>
@@ -263,13 +185,9 @@
         <p class="section-desc">Cover all bathroom scenarios, providing one-stop solutions for engineering projects.</p>
       </div>
       <div class="categories-grid">
-        <!-- 分类跳系列详情 -->
         <router-link to="/series/Bathtub" class="category-card fade-up">
           <div class="category-count">86 SKU</div>
-          <svg class="category-geo" width="180" height="180" viewBox="0 0 180 180">
-            <circle cx="90" cy="90" r="80" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
-            <circle cx="90" cy="90" r="50" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
-          </svg>
+          <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Bathtubs & Whirlpools</h3>
             <p>Freestanding, built-in, massage tubs in solid surface & acrylic</p>
@@ -278,9 +196,7 @@
 
         <router-link to="/series/Basin" class="category-card fade-up">
           <div class="category-count">124 SKU</div>
-          <svg class="category-geo" width="180" height="180" viewBox="0 0 180 180">
-            <rect x="20" y="20" width="140" height="140" stroke="#c9a96e" stroke-width="0.5" fill="none" transform="rotate(15, 90, 90)"/>
-          </svg>
+          <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Basins & Sinks</h3>
             <p>Countertop, under-mount, integrated & wall-hung basins</p>
@@ -289,9 +205,7 @@
 
         <router-link to="/series/Faucet" class="category-card wide fade-up">
           <div class="category-count">150+ SKU</div>
-          <svg class="category-geo" width="240" height="180" viewBox="0 0 240 180">
-            <polygon points="120,10 230,170 10,170" stroke="#c9a96e" stroke-width="0.5" fill="none"/>
-          </svg>
+          <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Faucets, Showers & Hardware</h3>
             <p>Brass & stainless steel fixtures, complete bathroom hardware system</p>
@@ -303,8 +217,8 @@
     <!-- Core Advantages -->
     <section class="advantages" id="advantages">
       <div class="section-header fade-up">
-        <div class="section-label">Why ZENTRIO</div>
-        <h2 class="section-title">Core Advantages of <strong>Choosing ZENTRIO</strong></h2>
+        <div class="section-label">Why ZENKRIO</div>
+        <h2 class="section-title">Core Advantages of <strong>Choosing ZENKRIO</strong></h2>
         <p class="section-desc">From R&D to delivery, we provide end-to-end professional support for B2B clients.</p>
       </div>
       <div class="advantages-grid">
@@ -342,7 +256,7 @@
     <!-- CTA Section -->
     <section class="cta" id="contact">
       <h2 class="fade-up">Start Your Next <strong>Bathroom Project</strong></h2>
-      <p class="fade-up">Whether hotel engineering, real estate or commercial customization, ZENTRIO's professional team delivers tailored solutions.</p>
+      <p class="fade-up">Whether hotel engineering, real estate or commercial customization, ZENKRIO's professional team delivers tailored solutions.</p>
       <div class="cta-buttons fade-up">
         <router-link to="/contact" class="btn-primary">Contact Business Team</router-link>
         <a href="#" class="btn-secondary">Download Catalog</a>
@@ -353,17 +267,15 @@
     <footer>
       <div class="footer-grid">
         <div class="footer-brand">
-          <router-link to="/" class="logo">ZENT<span>RIO</span></router-link>
-          <p>ZENTRIO — Committed to becoming a leading brand of premium bathroom solutions worldwide.</p>
+          <router-link to="/" class="logo">ZENK<span>RIO</span></router-link>
+          <p>ZENKRIO — Professional manufacturer of high-end bathroom products, focusing on bathtubs, basins, toilets and shower doors. Committed to providing global customers with one-stop bathroom solutions.</p>
         </div>
         <div class="footer-col">
           <h4>Products</h4>
-          <a href="#">Bathtub Series</a>
-          <a href="#">Basin Series</a>
-          <a href="#">Smart Toilets</a>
-          <a href="#">Faucets & Showers</a>
-          <a href="#">Bathroom Cabinets</a>
-          <a href="#">Bathroom Hardware</a>
+          <a href="/series/Bathtub">Bathtub Series</a>
+          <a href="/series/Basin">Basin Series</a>
+          <a href="/series/Toilet">Toilet Series</a>
+          <a href="/series/Shower Door">Shower Door Series</a>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
@@ -371,30 +283,24 @@
           <a href="#">OEM & ODM</a>
           <a href="#">Design Consultation</a>
           <a href="#">After-Sales Support</a>
-          <a href="#">Sample Request</a>
         </div>
         <div class="footer-col">
           <h4>Contact Us</h4>
-          <a href="#">business@zentrio.com</a>
-          <a href="#">+86 400-888-XXXX</a>
-          <a href="#">Foshan, China</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Alibaba</a>
+          <a>info@zenkrio.com</a>
+          <a>+86 18899810314</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 ZENTRIO. All rights reserved.</p>
+        <p>© 2026 ZENKRIO. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Use</a>
-          <a href="#">Sitemap</a>
         </div>
       </div>
     </footer>
   </div>
 
   <!-- 返回顶部按钮 -->
-  <!-- 返回顶部按钮（最终修复版） -->
   <button
       v-show="showBackTop"
       class="back-top-btn"
@@ -412,21 +318,18 @@ import { ref, onMounted } from 'vue'
 
 const router = useRouter()
 
-// 跳产品详情
 const goToProduct = (id) => {
   router.push(`/product/${id}`)
 }
 
-// 移动端菜单
 const toggleMobileMenu = () => {
   const menu = document.getElementById('mobileMenu');
   if (menu) menu.classList.toggle('active');
 };
 
-// 预加载
 const progress = ref(0)
 const preloaderHidden = ref(false)
-const circumference = 2 * Math.PI * 52
+const circumference = 326.725636
 const progressOffset = ref(circumference)
 
 const startLoading = () => {
@@ -443,7 +346,6 @@ const startLoading = () => {
   }, 80)
 }
 
-// 返回顶部（关键修复）
 const showBackTop = ref(false)
 const scrollToTop = () => {
   if (typeof window !== 'undefined') {
@@ -457,14 +359,12 @@ const scrollToTop = () => {
 onMounted(() => {
   startLoading()
 
-  // 导航栏滚动效果
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
     if (header) header.classList.toggle('scrolled', window.scrollY > 60);
     showBackTop.value = window.scrollY > 300;
   });
 
-  // 锚点平滑滚动
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       const target = document.querySelector(anchor.getAttribute('href'));
@@ -475,7 +375,6 @@ onMounted(() => {
     });
   });
 
-  // 渐入动画
   const fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
@@ -487,7 +386,6 @@ onMounted(() => {
 
   document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 
-  // 数字增长动画
   const animateStats = () => {
     document.querySelectorAll('.stat-number').forEach(el => {
       const text = el.textContent;
@@ -516,7 +414,6 @@ onMounted(() => {
 </script>
 
 <style>
-/* 你原版完整样式，100%保留，无任何改动 */
 * {
   margin: 0;
   padding: 0;
@@ -864,7 +761,7 @@ section {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
 }
 .product-card {
@@ -887,10 +784,10 @@ section {
   align-items: center;
   justify-content: center;
 }
-.product-image svg {
-  width: 120px;
-  height: 120px;
-  opacity: 0.25;
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .product-badge {
   position: absolute;
@@ -961,20 +858,9 @@ section {
   position: relative;
   overflow: hidden;
 }
-.featured-visual::before {
-  content: '';
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border: 1px solid rgba(201,169,110,0.12);
-  border-radius: 50%;
-}
-.featured-visual svg {
-  width: 200px;
-  height: 200px;
-  opacity: 0.3;
-  position: relative;
-  z-index: 1;
+.featured-img {
+  max-width: 300px;
+  object-fit: contain;
 }
 .featured-content {
   display: flex;
@@ -1048,12 +934,15 @@ section {
   height: 260px;
   background: linear-gradient(135deg, #0f3460, #1a1a2e);
 }
-.category-geo {
+.category-img {
   position: absolute;
   top: 50%;
   right: 60px;
   transform: translateY(-50%);
-  opacity: 0.08;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  opacity: 0.2;
 }
 .category-info h3 {
   font-size: 24px;
@@ -1297,7 +1186,6 @@ footer {
   transform: translateY(0);
 }
 
-/* 预加载样式 */
 .preloader {
   position: fixed;
   inset: 0;
@@ -1343,10 +1231,9 @@ footer {
   color: var(--primary);
 }
 
-/* 返回顶部按钮 */
 .back-top-btn {
   position: fixed;
-  top: 50rem;
+  bottom: 30px;
   right: 30px;
   width: 50px;
   height: 50px;
