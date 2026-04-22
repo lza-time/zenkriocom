@@ -1,15 +1,4 @@
 <template>
-  <!-- 预加载 -->
-  <div class="preloader" :class="{ hidden: preloaderHidden }">
-    <div class="progress-ring">
-      <svg width="120" height="120">
-        <circle class="progress-ring__circle-bg" r="52" cx="60" cy="60"/>
-        <circle class="progress-ring__circle" r="52" cx="60" cy="60" :stroke-dashoffset="progressOffset"/>
-      </svg>
-      <div class="progress-text">{{ progress }}%</div>
-    </div>
-  </div>
-
   <div id="app">
     <!-- Header Navigation -->
     <header id="header">
@@ -327,25 +316,6 @@ const toggleMobileMenu = () => {
   if (menu) menu.classList.toggle('active');
 };
 
-const progress = ref(0)
-const preloaderHidden = ref(false)
-const circumference = 326.725636
-const progressOffset = ref(circumference)
-
-const startLoading = () => {
-  const timer = setInterval(() => {
-    progress.value += 4
-    if (progress.value >= 100) {
-      progress.value = 100
-      clearInterval(timer)
-      setTimeout(() => {
-        preloaderHidden.value = true
-      }, 300)
-    }
-    progressOffset.value = circumference - (progress.value / 100) * circumference
-  }, 80)
-}
-
 const showBackTop = ref(false)
 const scrollToTop = () => {
   if (typeof window !== 'undefined') {
@@ -357,8 +327,6 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
-  startLoading()
-
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
     if (header) header.classList.toggle('scrolled', window.scrollY > 60);
@@ -1184,51 +1152,6 @@ footer {
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.preloader {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-.preloader.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-.progress-ring {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-.progress-ring__circle-bg {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 8;
-  transform: rotate(-90deg);
-  transform-origin: center;
-}
-.progress-ring__circle {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 8;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: center;
-  transition: stroke-dashoffset 0.1s ease;
-}
-.progress-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--primary);
 }
 
 .back-top-btn {
