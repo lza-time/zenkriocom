@@ -58,8 +58,8 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUser, logout as clearSession } from '@/services/authService'
-import productImage from '@/assets/1.png'
-import heroImage from '@/assets/hero.png'
+import productImage from '@/assets/aurora-bathtub.svg'
+import heroImage from '@/assets/hero-bathroom.svg'
 
 const router = useRouter()
 const API = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api'
@@ -81,8 +81,8 @@ function can(module) { return user.value?.role === 'admin' && (user.value.permis
 function selectUser(item) { selectedUser.value = item }
 async function savePermissions() { if (!selectedUser.value) return; try { await updateUser(selectedUser.value) } catch {} }
 function previewImage(value) {
-  if (value?.endsWith('/1.png')) return productImage
-  if (value?.endsWith('/hero.png')) return heroImage
+  if (value?.endsWith('/1.png') || value?.endsWith('/aurora-bathtub.svg')) return productImage
+  if (value?.endsWith('/hero.png') || value?.endsWith('/hero-bathroom.svg')) return heroImage
   return value
 }
 

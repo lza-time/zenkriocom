@@ -36,8 +36,7 @@
           @click="goToProduct(item.id)"
       >
         <div class="product-image">
-          <!-- 全部锁死 1.png -->
-          <img src="@/assets/1.png" alt="Product" />
+          <img :src="productImage(item.id)" :alt="item.name" />
           <div v-if="item.badge" class="product-badge">{{ item.badge }}</div>
         </div>
         <div class="product-info">
@@ -58,11 +57,19 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
 import { productData } from '@/mock/productData.js'
+import auroraImage from '@/assets/aurora-bathtub.svg'
+import luminaImage from '@/assets/lumina-mirror.svg'
+import vesselImage from '@/assets/vessel-basin.svg'
+import nexusImage from '@/assets/nexus-toilet.svg'
+import rainfallImage from '@/assets/rainfall-shower.svg'
+import modularImage from '@/assets/modular-cabinet.svg'
 
 const route = useRoute()
 const router = useRouter()
 const seriesName = ref(route.params.series)
 const filterCategory = ref('all')
+const productImages = [auroraImage, luminaImage, vesselImage, nexusImage, rainfallImage, modularImage]
+const productImage = id => productImages[id - 1] || auroraImage
 
 const filteredProducts = computed(() => {
   if (filterCategory.value === 'all') return productData

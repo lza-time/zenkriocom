@@ -39,6 +39,10 @@ function normalize(value) {
   return String(value || '').trim()
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]))
+}
+
 function isValidUuid(value) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value))
 }
@@ -115,6 +119,22 @@ async function deliverEmailCode(email, code) {
     html: `<p>Your ZENKRIO verification code is:</p><p style="font-size:28px;font-weight:700;letter-spacing:6px">${code}</p><p>This code expires in 5 minutes.</p>`,
   })
   return true
+}
+
+async function deliverContactMessage({ name, phone, email, message }) {
+  if (!mailer || !process.env.SMTP_USER) throw new Error('Email service is not configured')
+  const safeName = escapeHtml(name)
+  const safePhone = escapeHtml(phone || 'Not provided')
+  const safeEmail = escapeHtml(email)
+  const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
+  await mailer.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to: process.env.SMTP_USER,
+    replyTo: email,
+    subject: `ZENKRIO contact form: ${name}`,
+    text: `Name: ${name}\nPhone: ${phone || 'Not provided'}\nEmail: ${email}\n\nMessage:\n${message}`,
+    html: `<h2>ZENKRIO contact form</h2><p><strong>Name:</strong> ${safeName}</p><p><strong>Phone:</strong> ${safePhone}</p><p><strong>Email:</strong> ${safeEmail}</p><hr><p>${safeMessage}</p>`,
+  })
 }
 
 function issueToken(user) {
@@ -242,6 +262,26 @@ app.post('/api/auth/send-code', async (req, res) => {
   }
   if (process.env.NODE_ENV !== 'production') response.devCode = code
   return res.json(response)
+})
+
+app.post('/api/contact', async (req, res) => {
+  const name = normalize(req.body.name)
+  const phone = normalize(req.body.phone)
+  const email = normalize(req.body.email)
+  const message = normalize(req.body.message)
+  if (!name || name.length > 120 || !email || email.length > 255 || !message || message.length > 5000) {
+    return res.status(400).json({ message: 'Name, email and message are required' })
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ message: 'A valid email address is required' })
+  }
+  try {
+    await deliverContactMessage({ name, phone, email, message })
+    return res.json({ success: true })
+  } catch (error) {
+    console.error('Contact email error:', error.message)
+    return res.status(503).json({ message: 'Email service is not configured or unavailable' })
+  }
 })
 
 app.post('/api/auth/login', async (req, res) => {

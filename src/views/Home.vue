@@ -100,7 +100,7 @@
       <div class="products-grid">
         <div class="product-card fade-up" @click="goToProduct(1)">
           <div class="product-image">
-              <img :src="content('product', 'aurora', 'imageUrl', '/src/assets/1.png')" alt="Product">
+              <img :src="content('product', 'aurora', 'imageUrl', '/src/assets/aurora-bathtub.svg')" alt="Aurora bathtub">
               <div class="product-badge">Hot Sale</div>
             </div>
           <div class="product-info">
@@ -117,7 +117,7 @@
 
         <div class="product-card fade-up" @click="goToProduct(2)">
           <div class="product-image">
-            <img :src="content('product', 'vessel', 'imageUrl', '/src/assets/hero.png')" alt="Product">
+            <img :src="content('product', 'vessel', 'imageUrl', '/src/assets/vessel-basin.svg')" alt="Vessel basin">
           </div>
           <div class="product-info">
             <div class="product-category">{{ content('product', 'vessel', 'subtitle', 'Countertop Basin') }}</div>
@@ -133,7 +133,7 @@
 
         <div class="product-card fade-up" @click="goToProduct(3)">
           <div class="product-image">
-            <img :src="content('product', 'nexus', 'imageUrl', '/src/assets/1.png')" alt="Product">
+            <img :src="content('product', 'nexus', 'imageUrl', '/src/assets/nexus-toilet.svg')" alt="Nexus smart toilet">
             <div class="product-badge">New Arrival</div>
           </div>
           <div class="product-info">
@@ -150,7 +150,7 @@
 
         <div class="product-card fade-up" @click="goToProduct(4)">
           <div class="product-image">
-            <img :src="content('product', 'modular', 'imageUrl', '/src/assets/hero.png')" alt="Product">
+            <img :src="content('product', 'modular', 'imageUrl', '/src/assets/modular-cabinet.svg')" alt="Modular bathroom cabinet">
           </div>
           <div class="product-info">
             <div class="product-category">{{ content('product', 'modular', 'subtitle', 'Bathroom Cabinet') }}</div>
@@ -169,7 +169,7 @@
     <!-- Featured Product -->
     <div class="featured">
       <div class="featured-visual">
-        <img src="@/assets/1.png" alt="Featured" class="featured-img">
+        <img src="@/assets/aurora-bathtub.svg" alt="Aurora bathtub" class="featured-img">
       </div>
       <div class="featured-content fade-up">
         <div class="section-label">Signature Collection</div>
@@ -196,7 +196,7 @@
       <div class="categories-grid">
         <a href="/series/Bathtub" class="category-card fade-up" @click.prevent="openProtected('/series/Bathtub')">
           <div class="category-count">86 SKU</div>
-          <img src="@/assets/1.png" class="category-img" alt="Category">
+          <img src="@/assets/aurora-bathtub.svg" class="category-img" alt="Bathtubs and whirlpools">
           <div class="category-info">
             <h3>Bathtubs & Whirlpools</h3>
             <p>Freestanding, built-in, massage tubs in solid surface & acrylic</p>
@@ -205,7 +205,7 @@
 
         <a href="/series/Basin" class="category-card fade-up" @click.prevent="openProtected('/series/Basin')">
           <div class="category-count">124 SKU</div>
-          <img src="@/assets/1.png" class="category-img" alt="Category">
+          <img src="@/assets/vessel-basin.svg" class="category-img" alt="Basins and sinks">
           <div class="category-info">
             <h3>Basins & Sinks</h3>
             <p>Countertop, under-mount, integrated & wall-hung basins</p>
@@ -214,7 +214,7 @@
 
         <a href="/series/Faucet" class="category-card wide fade-up" @click.prevent="openProtected('/series/Faucet')">
           <div class="category-count">150+ SKU</div>
-          <img src="@/assets/1.png" class="category-img" alt="Category">
+          <img src="@/assets/rainfall-shower.svg" class="category-img" alt="Faucets and showers">
           <div class="category-info">
             <h3>Faucets, Showers & Hardware</h3>
             <p>Brass & stainless steel fixtures, complete bathroom hardware system</p>
@@ -325,8 +325,10 @@
 import { useRouter, useRoute } from 'vue-router'
 import { computed, ref, onMounted } from 'vue'
 import { getUser, logout } from '@/services/authService.js'
-import productImage from '@/assets/1.png'
-import heroImage from '@/assets/hero.png'
+import auroraImage from '@/assets/aurora-bathtub.svg'
+import vesselImage from '@/assets/vessel-basin.svg'
+import nexusImage from '@/assets/nexus-toilet.svg'
+import modularImage from '@/assets/modular-cabinet.svg'
 
 const router = useRouter()
 const route = useRoute()
@@ -342,8 +344,10 @@ const contentMap = computed(() => Object.fromEntries(siteContents.value.map(item
 function content(type, key, field, fallback) {
   const value = contentMap.value[`${type}:${key}`]?.[field]
   if (field === 'imageUrl') {
-    if (value?.endsWith('/1.png')) return productImage
-    if (value?.endsWith('/hero.png')) return heroImage
+    if (value?.endsWith('/1.png') || value?.endsWith('/aurora-bathtub.svg')) return auroraImage
+    if (value?.endsWith('/hero.png') || value?.endsWith('/vessel-basin.svg')) return vesselImage
+    if (value?.endsWith('/nexus-toilet.svg')) return nexusImage
+    if (value?.endsWith('/modular-cabinet.svg')) return modularImage
   }
   return value || fallback
 }

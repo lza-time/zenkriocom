@@ -91,6 +91,7 @@ const form = ref({
   message: ''
 })
 const loading = ref(false)
+const API = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api'
 
 // 弹窗状态
 const modal = ref({
@@ -113,7 +114,7 @@ const closeModal = () => {
 const handleSubmit = async () => {
   loading.value = true
   try {
-    const response = await fetch("https://formsubmit.co/ajax/info@zenkrio.com", {
+    const response = await fetch(`${API}/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,9 +128,9 @@ const handleSubmit = async () => {
       })
     })
 
-    const data = await response.json()
+    const data = await response.json().catch(() => ({}))
 
-    if (data.success === "true") {
+    if (response.ok && data.success) {
       openModal(
           'success',
           'Message Sent!',
@@ -140,7 +141,7 @@ const handleSubmit = async () => {
       openModal(
           'error',
           'Failed to Send',
-          'Please try again or contact us via WhatsApp: +86 18899810314'
+          data.message || 'Please try again or contact us via WhatsApp: +86 18899810314'
       )
     }
   } catch (error) {

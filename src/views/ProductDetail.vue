@@ -10,8 +10,7 @@
     <div class="detail-container">
       <div class="detail-left">
         <div class="detail-image">
-          <!-- 锁死 1.png -->
-          <img src="@/assets/1.png" alt="Product" />
+          <img :src="productImage" :alt="product.name || 'Product'" />
         </div>
       </div>
       <div class="detail-right">
@@ -42,12 +41,20 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { productData } from '@/mock/productData.js'
+import auroraImage from '@/assets/aurora-bathtub.svg'
+import luminaImage from '@/assets/lumina-mirror.svg'
+import vesselImage from '@/assets/vessel-basin.svg'
+import nexusImage from '@/assets/nexus-toilet.svg'
+import rainfallImage from '@/assets/rainfall-shower.svg'
+import modularImage from '@/assets/modular-cabinet.svg'
 
 const route = useRoute()
 const productId = route.params.id
 const product = ref({})
+const productImages = [auroraImage, luminaImage, vesselImage, nexusImage, rainfallImage, modularImage]
+const productImage = computed(() => productImages[(product.value.id || 1) - 1])
 
 onMounted(() => {
   product.value = productData.find(item => item.id == productId)
