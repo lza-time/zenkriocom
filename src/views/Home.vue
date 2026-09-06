@@ -9,7 +9,18 @@
           <li><a href="#categories" class="nav-link">Product Categories</a></li>
           <li><a href="#advantages" class="nav-link">Core Advantages</a></li>
           <li>
-            <router-link to="/contact" class="btn-contact">Business Cooperation</router-link>
+            <a href="/contact" class="btn-contact" @click.prevent="openProtected('/contact')">Business Cooperation</a>
+          </li>
+          <li v-if="!user">
+            <a href="#" class="nav-link" @click.prevent="openAuth('login')">Login</a>
+          </li>
+          <li v-if="!user">
+            <a href="#" class="nav-link" @click.prevent="openAuth('register')">Register</a>
+          </li>
+          <li v-if="user" class="nav-user">
+            <span class="nav-username">Welcome, {{ user.username }}</span>
+            <router-link v-if="user" to="/admin" class="nav-link">Admin</router-link>
+            <button class="nav-logout" @click="handleLogout">Logout</button>
           </li>
         </ul>
         <button class="hamburger" @click="toggleMobileMenu">
@@ -26,8 +37,17 @@
       <a href="#products" @click="toggleMobileMenu">Product Series</a>
       <a href="#categories" @click="toggleMobileMenu">Product Categories</a>
       <a href="#advantages" @click="toggleMobileMenu">Core Advantages</a>
-      <router-link to="/contact" @click="toggleMobileMenu">Business Cooperation</router-link>
+      <a href="/contact" @click.prevent="openProtected('/contact'); toggleMobileMenu()">Business Cooperation</a>
+      <a v-if="!user" href="#" @click.prevent="openAuth('login'); toggleMobileMenu()">Login</a>
+      <a v-if="!user" href="#" @click.prevent="openAuth('register'); toggleMobileMenu()">Register</a>
+      <div v-if="user" class="mobile-user">
+        <span>Welcome, {{ user.username }}</span>
+        <button v-if="user" @click="openAdmin(); toggleMobileMenu()">Admin dashboard</button>
+        <button @click="handleLogout">Logout</button>
+      </div>
     </div>
+
+    <AuthModal v-if="authOpen" :mode="authMode" @close="authOpen=false" @logged="onLogged" />
 
     <!-- Hero Section -->
     <section class="hero">
@@ -39,7 +59,7 @@
         <p>ZENKRIO is dedicated to providing high-end customized bathroom solutions for global hotels, real estate and commercial projects, reshaping the experience with exquisite craftsmanship and forward-looking design.</p>
         <div class="hero-actions">
           <a href="#products" class="btn-primary">Explore Products</a>
-          <router-link to="/contact" class="btn-secondary">Get a Quote</router-link>
+          <a href="/contact" class="btn-secondary" @click.prevent="openProtected('/contact')">Get a Quote</a>
         </div>
       </div>
       <div class="scroll-indicator">
@@ -52,20 +72,20 @@
     <div class="stats-bar">
       <div class="stats-container">
         <div class="stat-item fade-up">
-          <div class="stat-number">18+</div>
-          <div class="stat-label">Years of Experience</div>
+          <div class="stat-number">{{ content('stat', 'experience', 'title', '18+') }}</div>
+          <div class="stat-label">{{ content('stat', 'experience', 'subtitle', 'Years of Experience') }}</div>
         </div>
         <div class="stat-item fade-up">
-          <div class="stat-number">2,600+</div>
-          <div class="stat-label">Completed Projects</div>
+          <div class="stat-number">{{ content('stat', 'projects', 'title', '2,600+') }}</div>
+          <div class="stat-label">{{ content('stat', 'projects', 'subtitle', 'Completed Projects') }}</div>
         </div>
         <div class="stat-item fade-up">
-          <div class="stat-number">46</div>
-          <div class="stat-label">Export Countries</div>
+          <div class="stat-number">{{ content('stat', 'countries', 'title', '46') }}</div>
+          <div class="stat-label">{{ content('stat', 'countries', 'subtitle', 'Export Countries') }}</div>
         </div>
         <div class="stat-item fade-up">
-          <div class="stat-number">360+</div>
-          <div class="stat-label">Product SKUs</div>
+          <div class="stat-number">{{ content('stat', 'skus', 'title', '360+') }}</div>
+          <div class="stat-label">{{ content('stat', 'skus', 'subtitle', 'Product SKUs') }}</div>
         </div>
       </div>
     </div>
@@ -80,13 +100,13 @@
       <div class="products-grid">
         <div class="product-card fade-up" @click="goToProduct(1)">
           <div class="product-image">
-            <img src="@/assets/1.png" alt="Product">
-            <div class="product-badge">Hot Sale</div>
-          </div>
+              <img :src="content('product', 'aurora', 'imageUrl', '/src/assets/1.png')" alt="Product">
+              <div class="product-badge">Hot Sale</div>
+            </div>
           <div class="product-info">
-            <div class="product-category">Freestanding Bathtub</div>
-            <div class="product-name">AURORA Series</div>
-            <div class="product-desc">Solid surface integrated molding, streamline design, constant temperature insulation technology</div>
+            <div class="product-category">{{ content('product', 'aurora', 'subtitle', 'Freestanding Bathtub') }}</div>
+            <div class="product-name">{{ content('product', 'aurora', 'title', 'AURORA Series') }}</div>
+            <div class="product-desc">{{ content('product', 'aurora', 'body', 'Solid surface integrated molding, streamline design, constant temperature insulation technology') }}</div>
             <div class="product-specs">
               <div class="spec"><strong>1700mm</strong>Length</div>
               <div class="spec"><strong>Matte White</strong>Finish</div>
@@ -97,12 +117,12 @@
 
         <div class="product-card fade-up" @click="goToProduct(2)">
           <div class="product-image">
-            <img src="@/assets/1.png" alt="Product">
+            <img :src="content('product', 'vessel', 'imageUrl', '/src/assets/hero.png')" alt="Product">
           </div>
           <div class="product-info">
-            <div class="product-category">Countertop Basin</div>
-            <div class="product-name">VESSEL Series</div>
-            <div class="product-desc">Ultra-thin edge, nano self-cleaning glaze, antibacterial ceramic technology</div>
+            <div class="product-category">{{ content('product', 'vessel', 'subtitle', 'Countertop Basin') }}</div>
+            <div class="product-name">{{ content('product', 'vessel', 'title', 'VESSEL Series') }}</div>
+            <div class="product-desc">{{ content('product', 'vessel', 'body', 'Ultra-thin edge, nano self-cleaning glaze, antibacterial ceramic technology') }}</div>
             <div class="product-specs">
               <div class="spec"><strong>600mm</strong>Diameter</div>
               <div class="spec"><strong>Nano Glaze</strong>Finish</div>
@@ -113,13 +133,13 @@
 
         <div class="product-card fade-up" @click="goToProduct(3)">
           <div class="product-image">
-            <img src="@/assets/1.png" alt="Product">
+            <img :src="content('product', 'nexus', 'imageUrl', '/src/assets/1.png')" alt="Product">
             <div class="product-badge">New Arrival</div>
           </div>
           <div class="product-info">
-            <div class="product-category">Toilet</div>
-            <div class="product-name">NEXUS Series</div>
-            <div class="product-desc">Instant heating system, auto lid sensor, UV sterilization & deodorization</div>
+            <div class="product-category">{{ content('product', 'nexus', 'subtitle', 'Smart Toilet') }}</div>
+            <div class="product-name">{{ content('product', 'nexus', 'title', 'NEXUS Series') }}</div>
+            <div class="product-desc">{{ content('product', 'nexus', 'body', 'Instant heating system, auto lid sensor, UV sterilization & deodorization') }}</div>
             <div class="product-specs">
               <div class="spec"><strong>3/4.5L</strong>Water Volume</div>
               <div class="spec"><strong>Smart Sensor</strong>Control</div>
@@ -130,12 +150,12 @@
 
         <div class="product-card fade-up" @click="goToProduct(4)">
           <div class="product-image">
-            <img src="@/assets/1.png" alt="Product">
+            <img :src="content('product', 'modular', 'imageUrl', '/src/assets/hero.png')" alt="Product">
           </div>
           <div class="product-info">
-            <div class="product-category">Shower Door</div>
-            <div class="product-name">MODULAR Series</div>
-            <div class="product-desc">Aluminum alloy frame, explosion-proof glass, waterproof sealing strip, mute sliding</div>
+            <div class="product-category">{{ content('product', 'modular', 'subtitle', 'Bathroom Cabinet') }}</div>
+            <div class="product-name">{{ content('product', 'modular', 'title', 'MODULAR Series') }}</div>
+            <div class="product-desc">{{ content('product', 'modular', 'body', 'Modular design, moisture-proof multilayer wood, soft close hinge technology') }}</div>
             <div class="product-specs">
               <div class="spec"><strong>8mm</strong>Tempered Glass</div>
               <div class="spec"><strong>Stainless Steel</strong>Hardware</div>
@@ -162,7 +182,7 @@
           <li>Custom sizes available · Project-ready</li>
           <li>CE, cUPC, WaterMark certified</li>
         </ul>
-        <router-link to="/series/AURORA" class="btn-primary">View Series</router-link>
+        <a href="/series/AURORA" class="btn-primary" @click.prevent="openProtected('/series/AURORA')">View Series</a>
       </div>
     </div>
 
@@ -174,32 +194,32 @@
         <p class="section-desc">Cover all bathroom scenarios, providing one-stop solutions for engineering projects.</p>
       </div>
       <div class="categories-grid">
-        <router-link to="/series/Bathtub" class="category-card fade-up">
+        <a href="/series/Bathtub" class="category-card fade-up" @click.prevent="openProtected('/series/Bathtub')">
           <div class="category-count">86 SKU</div>
           <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Bathtubs & Whirlpools</h3>
             <p>Freestanding, built-in, massage tubs in solid surface & acrylic</p>
           </div>
-        </router-link>
+        </a>
 
-        <router-link to="/series/Basin" class="category-card fade-up">
+        <a href="/series/Basin" class="category-card fade-up" @click.prevent="openProtected('/series/Basin')">
           <div class="category-count">124 SKU</div>
           <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Basins & Sinks</h3>
             <p>Countertop, under-mount, integrated & wall-hung basins</p>
           </div>
-        </router-link>
+        </a>
 
-        <router-link to="/series/Faucet" class="category-card wide fade-up">
+        <a href="/series/Faucet" class="category-card wide fade-up" @click.prevent="openProtected('/series/Faucet')">
           <div class="category-count">150+ SKU</div>
           <img src="@/assets/1.png" class="category-img" alt="Category">
           <div class="category-info">
             <h3>Faucets, Showers & Hardware</h3>
             <p>Brass & stainless steel fixtures, complete bathroom hardware system</p>
           </div>
-        </router-link>
+        </a>
       </div>
     </section>
 
@@ -247,8 +267,8 @@
       <h2 class="fade-up">Start Your Next <strong>Bathroom Project</strong></h2>
       <p class="fade-up">Whether hotel engineering, real estate or commercial customization, ZENKRIO's professional team delivers tailored solutions.</p>
       <div class="cta-buttons fade-up">
-        <router-link to="/contact" class="btn-primary">Contact Business Team</router-link>
-        <a href="#" class="btn-secondary">Download Catalog</a>
+        <a href="/contact" class="btn-primary" @click.prevent="openProtected('/contact')">Contact Business Team</a>
+        <a href="#" class="btn-secondary" @click.prevent="requireAuth()">Download Catalog</a>
       </div>
     </section>
 
@@ -261,10 +281,10 @@
         </div>
         <div class="footer-col">
           <h4>Products</h4>
-          <a href="/series/Bathtub">Bathtub Series</a>
-          <a href="/series/Basin">Basin Series</a>
-          <a href="/series/Toilet">Toilet Series</a>
-          <a href="/series/Shower Door">Shower Door Series</a>
+          <a href="/series/Bathtub" @click.prevent="openProtected('/series/Bathtub')">Bathtub Series</a>
+          <a href="/series/Basin" @click.prevent="openProtected('/series/Basin')">Basin Series</a>
+          <a href="/series/Toilet" @click.prevent="openProtected('/series/Toilet')">Toilet Series</a>
+          <a href="/series/Shower Door" @click.prevent="openProtected('/series/Shower Door')">Shower Door Series</a>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
@@ -302,19 +322,80 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { computed, ref, onMounted } from 'vue'
+import { getUser, logout } from '@/services/authService.js'
+import productImage from '@/assets/1.png'
+import heroImage from '@/assets/hero.png'
 
 const router = useRouter()
+const route = useRoute()
+
+import AuthModal from '@/components/AuthModal.vue'
+
+const user = ref(null)
+const authOpen = ref(false)
+const authMode = ref('login')
+const adminPending = ref(false)
+const siteContents = ref([])
+const contentMap = computed(() => Object.fromEntries(siteContents.value.map(item => [`${item.contentType}:${item.contentKey}`, item])))
+function content(type, key, field, fallback) {
+  const value = contentMap.value[`${type}:${key}`]?.[field]
+  if (field === 'imageUrl') {
+    if (value?.endsWith('/1.png')) return productImage
+    if (value?.endsWith('/hero.png')) return heroImage
+  }
+  return value || fallback
+}
+
+function openAuth(m) { authMode.value = m; authOpen.value = true }
+
+function onLogged(u) {
+  user.value = u
+  authOpen.value = false
+  if (adminPending.value) {
+    adminPending.value = false
+    router.push('/admin')
+    return
+  }
+  if (route.query.redirect) router.push(String(route.query.redirect))
+}
+
+function openAdmin() {
+  if (user.value?.role === 'admin') {
+    router.push('/admin')
+    return
+  }
+  adminPending.value = true
+  openAuth('login')
+}
+
+function requireAuth() {
+  if (!user.value) {
+    openAuth('login')
+    return false
+  }
+  return true
+}
+
+function openProtected(path) {
+  if (requireAuth()) router.push(path)
+}
 
 const goToProduct = (id) => {
-  router.push(`/product/${id}`)
+  openProtected(`/product/${id}`)
 }
 
 const toggleMobileMenu = () => {
   const menu = document.getElementById('mobileMenu');
   if (menu) menu.classList.toggle('active');
 };
+
+const handleLogout = () => {
+  logout()
+  user.value = null
+  authOpen.value = false
+}
 
 const showBackTop = ref(false)
 const scrollToTop = () => {
@@ -327,6 +408,18 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
+  user.value = getUser()
+  fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:4000/api'}/content`)
+    .then(response => response.ok ? response.json() : [])
+    .then(data => { siteContents.value = Array.isArray(data) ? data : [] })
+    .catch(() => {})
+
+  // 如果 URL 上有 ?auth=login 或 ?auth=register，自动打开 modal
+  const q = route.query?.auth
+  if (q === 'login' || q === 'register') {
+    openAuth(q)
+  }
+
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
     if (header) header.classList.toggle('scrolled', window.scrollY > 60);
@@ -335,7 +428,9 @@ onMounted(() => {
 
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
+        const selector = anchor.getAttribute('href');
+        if (!selector || selector === '#') return;
+        const target = document.querySelector(selector);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -430,17 +525,19 @@ header.scrolled .btn-contact:hover {
   color: #fff !important;
 }
 nav {
-  max-width: 1300px;
+  width: min(100%, 1360px);
   margin: 0 auto;
-  padding: 18px 40px;
+  padding: 18px clamp(20px, 4vw, 48px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 .logo {
-  font-size: 26px;
+  flex: 0 0 auto;
+  font-size: clamp(21px, 2.1vw, 26px);
   font-weight: 700;
-  letter-spacing: 6px;
+  letter-spacing: clamp(3px, .45vw, 6px);
   color: #fff;
   text-decoration: none;
   transition: color 0.3s;
@@ -449,17 +546,71 @@ nav {
   color: var(--accent);
 }
 .nav-links {
+  min-width: 0;
+  flex: 1 1 auto;
   display: flex;
   align-items: center;
-  gap: 36px;
+  justify-content: flex-end;
+  gap: clamp(14px, 2.2vw, 32px);
   list-style: none;
+}
+.nav-links > li { min-width: 0; }
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255,255,255,0.14);
+}
+.nav-username {
+  max-width: 132px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.nav-logout {
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.nav-logout:hover {
+  background: linear-gradient(90deg, #ffd58a, #c9a96e);
+  color: #111;
+  border-color: transparent;
+}
+header.scrolled .nav-user {
+  border-left-color: rgba(17, 17, 17, 0.12);
+}
+header.scrolled .nav-username {
+  color: var(--primary) !important;
+}
+header.scrolled .nav-logout {
+  border-color: rgba(17, 17, 17, 0.18);
+  color: var(--primary);
+  background: rgba(17,17,17,0.04);
+}
+header.scrolled .nav-logout:hover {
+  background: linear-gradient(90deg, #ffd58a, #c9a96e);
+  color: #111;
 }
 .nav-link {
   text-decoration: none;
   color: rgba(255,255,255,0.85);
-  font-size: 14px;
+  font-size: clamp(11px, 1.05vw, 14px);
   font-weight: 500;
-  letter-spacing: 1px;
+  letter-spacing: clamp(.4px, .08vw, 1px);
   text-transform: uppercase;
   transition: color 0.3s;
   position: relative;
@@ -478,11 +629,13 @@ nav {
   width: 100%;
 }
 .btn-contact {
-  padding: 10px 28px;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 9px clamp(12px, 1.8vw, 28px);
   border: 1.5px solid rgba(255,255,255,0.6);
   color: #fff;
   text-decoration: none;
-  font-size: 13px;
+  font-size: clamp(10px, .95vw, 13px);
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1106,13 +1259,38 @@ footer {
 .mobile-menu.active {
   display: flex;
 }
+.mobile-user {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(260px, 80vw);
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  text-align: center;
+}
+.mobile-user button {
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
 .mobile-menu a {
+  max-width: calc(100vw - 48px);
   color: #fff;
   text-decoration: none;
-  font-size: 18px;
+  font-size: clamp(15px, 4.5vw, 18px);
   font-weight: 500;
-  letter-spacing: 3px;
+  letter-spacing: clamp(1.5px, .7vw, 3px);
   text-transform: uppercase;
+  text-align: center;
 }
 .mobile-close {
   position: absolute;
@@ -1125,6 +1303,10 @@ footer {
   cursor: pointer;
 }
 @media (max-width: 1024px) {
+  nav { padding-inline: 24px; gap: 16px; }
+  .nav-links { gap: 14px; }
+  .nav-user { gap: 8px; padding-left: 10px; }
+  .nav-logout { padding: 7px 10px; font-size: 10px; }
   .products-grid { grid-template-columns: repeat(2, 1fr); }
   .advantages-grid { grid-template-columns: repeat(2, 1fr); }
   .featured { grid-template-columns: 1fr; }
@@ -1132,9 +1314,12 @@ footer {
   .featured-content { padding: 50px 40px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
+  nav { padding: 16px 22px; }
+}
+@media (max-width: 768px) {
   nav { padding: 16px 20px; }
   section { padding: 70px 20px; }
   .stats-container { grid-template-columns: repeat(2, 1fr); gap: 24px; }
